@@ -1,5 +1,4 @@
 let keys = document.querySelectorAll(".key");
-let screen = document.querySelector(".screen");
 let operators = ["*", "-", "+", "/", "%", "^"];
 let equation = [];
 let equalPressed = false;
@@ -8,35 +7,44 @@ let pointer = 0;
 //Function to write the character on the screen and add it to the equation
 keys.forEach((key) => {
     key.addEventListener("click", () => {
+        let screen = document.querySelector(".screen");
         if(equalPressed){
-            equation = "";
+            equation = [];
             equalPressed = false; 
         }
         
-        equation.push(key.dataset.value);
+        equation[pointer] = key.dataset.value;
+        screen.children[pointer].setAttribute("data-info", `{index: ${equation.length}, value: ${key.dataset.value}}`)
+        screen.children[pointer].textContent = key.dataset.value;
         let div = document.createElement("div");
-        div.setAttribute("data-info", `{index: ${equation.length - 1}, value: ${key.dataset.value}}`)
-        div.textContent = key.dataset.value;
         screen.appendChild(div);
-        pointer = equation.length - 1;
+        if(pointer < equation.length){
+          pointer = equation.length;
+        } else {
+          pointer++;
+        }
     })
 })
 
 //Function to indicate where the equation end and start solving it
 let equal = document.querySelector("#equal");
 equal.addEventListener("click", () => {
+    let screen = document.querySelector(".screen");
     if(equation === []){ return }
-
     let readableEquation = makeReadable(equation);
 
-    if(!validEquation(readableEquation)){ 
-        screen.textContent = 'ERROR';
+    if(!validEquation(readableEquation)){
+        clear();
+        screen.firstElementChild.textContent = 'ERROR';
         equalPressed = true;
         return;
     }
 
-    screen.textContent = solve(readableEquation);
+    let result= solve(readableEquation);
+    clear();
+    screen.firstElementChild.textContent = result;
     equalPressed = true;
+    pointer = 0;
 })
 
 //Function to check if the equation given is correct
@@ -91,7 +99,20 @@ let makeReadable = (eq) => {
     }
   }
 
-  return arr;
+  let res = [];
+  for (let t = 0; t < arr.length; t++) {
+    if (!isNaN(parseFloat(arr[t]))) {
+      if (res.length && !isNaN(parseFloat(res[res.length - 1]))) {
+        res[res.length - 1] += arr[t];
+      } else {
+        res.push(arr[t]);
+      }
+    } else {
+      res.push(arr[t]);
+    }
+  }
+
+  return res;
 }
 
 //Function to resolve the equation
@@ -136,24 +157,43 @@ let solve = (arr) => {
         }
     }
 
-    return arr[0];
+    return parseFloat(arr[0]).toFixed(2);
   }
 
 //Function to clean eraser all the equation
 let clean = document.querySelector(".clear");
-clean.addEventListener("click", () => {
-  equation = "";
-  screen.textContent = equation;
-})
+clean.addEventListener("click", () => { clear() })
+
+let clear = () => {
+  let screen = document.querySelector(".screen");
+  equation = [];
+  pointer = 0;
+  while (screen.firstChild) {
+    screen.removeChild(screen.firstChild);
+  }
+  let div = document.createElement("div");
+  screen.appendChild(div);
+}
 
 //Function to move between characters
 let moves = document.querySelectorAll(".move");
 moves.forEach((move) => {
   move.addEventListener("click", () => {
-    if(equation !== []){ 
-      /*
-      ya fueron creados los div con un data-info con los valores del interior y el del indice, ahora toca como ver para mover el focus y poder cambiar el valor si agregar otro elemento
-      */
+    if(equation !== []){
+      if(move.dataset.dir === "right"){
+        if(pointer+1 > equation.length-1){
+          pointer = 0;
+        } else {
+          pointer++;
+        }
+      }
+      if(move.dataset.dir === "left"){
+        if(pointer-1 < 0){
+          pointer = equation.length-1;
+        } else {
+          pointer--;
+        }
+      }
     }
   })
 })
