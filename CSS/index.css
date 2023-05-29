@@ -19,45 +19,109 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 300px;
-    height: 600px;
+    background-color:rgb(255, 249, 239);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 600px;
+    height: 750px;
+}
+
+.screenBox{
+    width: 100%;
+    height: 235px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .screen{
     display: flex;
     align-items: center;
-    background-Color: black;
+    background-Color: #012622;
     color: white;
-    width: 100%;
-    height: 50px;
+    font-family: 'VT323', monospace;
+    font-size: 40px;
+    width: 450px;
+    height: 80px;
     overflow-x: auto;
+    box-sizing: content-box;
+    border-radius: 8px;
+    border: solid #2c2c2c;
+    border-left-width: 28px;
+    border-right-width: 28px;
+    border-top-width: 18px;
+    border-bottom-width: 18px;
 }
 
-.row{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.arrows{
     width: 100%;
-    height: auto;
+    height: 30px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
-.specialRow1{
+.keyboard{
+    width: 100%;
+    height: 485px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.col{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    width: 100%;
-    height: auto;
-}
-
-.specialRow2{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: auto;
+    height: 80%;
 }
 
 .selected{
     border: 2px solid red;
+}
+
+button{
+    border-radius: 8px;
+    font-family: 'Special Elite', cursive;
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+}
+
+.move{
+    width: 80px;
+    height: 30px;
+    border-radius: 20px;
+    background-color: #a9a9a9;
+}
+
+.key, #equal {
+    background-color: #2c2c2c;
+    width: 80px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.clear{
+    background-color: #a00000;
+    width: 60px;
+    height: 30px;
+    margin-top: 12px;
+    margin-bottom: 18px;
+}
+
+.plus{
+    width: 80px;
+    height: 142px;
+}
+
+button:hover, #equal:hover{
+    background-color: white;
+    color: #2c2c2c;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
 }

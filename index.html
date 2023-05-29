@@ -4,54 +4,57 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./CSS/index.css">
     <link rel="icon" href="./IMG/calculator-solid.svg" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./CSS/index.css">
     <title>Calculator</title>
 </head>
 <body>
     <div class="container">
-        <div class="screen">
-            <div>
-
+        <div class="screenBox">
+            <div class="screen">
+                <div>
+    
+                </div>
             </div>
         </div>
-        <div class="row">
+        <div class="arrows">
             <button class="move" data-dir="left"><</button>
             <button class="move" data-dir="right">></button>
         </div>
-        <div class="row">
-            <button class="clear">AC</button>
-            <button class="key" data-value=" ^ ">^</button>
-            <button class="key" data-value=" % ">%</button>
-            <button class="key" data-value=" / ">/</button>
-        </div>
-        <div class="row">
-            <button class="key" data-value="7">7</button>
-            <button class="key" data-value="8">8</button>
-            <button class="key" data-value="9">9</button>
-            <button class="key" data-value=" * ">*</button>
-        </div>
-        <div class="row">
-            <button class="key" data-value="4">4</button>
-            <button class="key" data-value="5">5</button>
-            <button class="key" data-value="6">6</button>
-            <button class="key" data-value=" - ">-</button>
-        </div>
-        <div class="row">
-            <div class="specialRow1">
-                <div class="row">
-                    <button class="key" data-value="1">1</button>
-                    <button class="key" data-value="2">2</button>
-                    <button class="key" data-value="3">3</button>
-                </div>
-                <div class="row">
-                    <button class="key" data-value=".">.</button>
-                    <button class="key" data-value="0">0</button>
-                    <button id="equal">=</button>
-                </div>
+        <div class="keyboard">
+            <div class="col">
+                <button class="clear">AC</button>
+                <button class="key" data-value="7">7</button>
+                <button class="key" data-value="4">4</button>
+                <button class="key" data-value="1">1</button>
+                <button class="key" data-value=".">.</button>
             </div>
-            <div class="specialRow2">
-                <button class="key" data-value=" + ">+</button>
+
+            <div class="col">
+                <button class="key" data-value=" ^ ">^</button>
+                <button class="key" data-value="8">8</button>
+                <button class="key" data-value="5">5</button>
+                <button class="key" data-value="2">2</button>
+                <button class="key" data-value="0">0</button>
+            </div>
+
+            <div class="col">
+                <button class="key" data-value=" % ">%</button>
+                <button class="key" data-value="9">9</button>
+                <button class="key" data-value="6">6</button>
+                <button class="key" data-value="3">3</button>
+                <button id="equal">=</button>
+            </div>
+
+            <div class="col">
+                <button class="key" data-value=" / ">/</button>
+                <button class="key" data-value=" * ">*</button>
+                <button class="key" data-value=" - ">-</button>
+                <button class="key plus" data-value=" + ">+</button>
             </div>
         </div>
     </div>
