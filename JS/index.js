@@ -5,17 +5,16 @@ let equalPressed = false;
 let pointer = 0;
 
 //Function to write the character on the screen and add it to the equation
-keys.forEach((key) => {
-    key.addEventListener("click", () => {
-        let screen = document.querySelector(".screen");
+let write = (char) => {
+  let screen = document.querySelector(".screen");
         if(equalPressed){
             equation = [];
             equalPressed = false; 
         }
         
-        equation[pointer] = key.dataset.value;
-        screen.children[pointer].setAttribute("data-info", `{index: ${equation.length}, value: ${key.dataset.value}}`)
-        screen.children[pointer].textContent = key.dataset.value;
+        equation[pointer] = char;
+        screen.children[pointer].setAttribute("data-info", `{index: ${equation.length}, value: ${char}}`)
+        screen.children[pointer].textContent = char;
         let div = document.createElement("div");
         screen.appendChild(div);
         if(pointer < equation.length){
@@ -23,14 +22,18 @@ keys.forEach((key) => {
         } else {
           pointer++;
         }
-    })
+}
+
+//Writting by clicking on the window
+keys.forEach((key) => {
+    key.addEventListener("click", () => { write(key.dataset.value) })
 })
 
 //Function to indicate where the equation end and start solving it
 let equal = document.querySelector("#equal");
 equal.addEventListener("click", () => {
     let screen = document.querySelector(".screen");
-    if(equation === []){ return }
+    if(equation.length === 0){ return }
     let readableEquation = makeReadable(equation);
 
     if(!validEquation(readableEquation)){
@@ -66,7 +69,6 @@ let makeReadable = (eq) => {
   let signs = ['+', '-'];
   let op = ["*", "/", "%", "^"];
 
-
   let i = 0;
   while(arr[i+1] !== undefined){
     if(signs.includes(arr[i]) && signs.includes(arr[i+1])){
@@ -101,7 +103,7 @@ let makeReadable = (eq) => {
 
   let res = [];
   for (let t = 0; t < arr.length; t++) {
-    if (!isNaN(parseFloat(arr[t]))) {
+    if (!operators.includes(arr[t])) {
       if (res.length && !isNaN(parseFloat(res[res.length - 1]))) {
         res[res.length - 1] += arr[t];
       } else {
@@ -136,7 +138,11 @@ let solve = (arr) => {
       if (arr[i + 1] === "*") {
         arr.splice(i, 3, parseFloat(arr[i]) * parseFloat(arr[i + 2]));
       } else if (arr[i + 1] === "/") {
-        arr.splice(i, 3, parseFloat(arr[i]) / parseFloat(arr[i + 2]));
+        if(arr[i + 2] === "0"){
+          return "ERROR";
+        } else {
+          arr.splice(i, 3, parseFloat(arr[i]) / parseFloat(arr[i + 2]));
+        }
       } else if(arr[i + 1] === "%") {
         arr.splice(i, 3, parseFloat(arr[i]) % parseFloat(arr[i + 2]));
       }else {
@@ -157,7 +163,11 @@ let solve = (arr) => {
         }
     }
 
-    return parseFloat(arr[0]).toFixed(2);
+    if(Number.isInteger(parseFloat(arr[0]))){
+      return parseFloat(arr[0]);
+    } else {
+      return parseFloat(arr[0]).toFixed(2);
+    }
   }
 
 //Function to clean eraser all the equation
@@ -196,4 +206,17 @@ moves.forEach((move) => {
       }
     }
   })
+})
+
+//Writting by pressing the keyboards
+document.addEventListener("keydown", (event) => {
+  let key = event.key;
+
+  if (!isNaN(parseFloat(key)) || key === "+" || key === "-" || key === "*" || key === "/" || key === ".") {
+    write(key);
+  }
+
+  if(key === "Enter") { 
+    equal.click();
+  }
 })
